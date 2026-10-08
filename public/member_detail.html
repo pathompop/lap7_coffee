@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายละเอียดสมาชิก | Coffee Shop</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #f7f3ef; color: #30261f; }
+    main { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+    h1, h2 { color: #5b3825; }
+    .card, .table-wrap { background: #fff; padding: 22px; margin: 16px 0; border-radius: 8px; box-shadow: 0 2px 12px #30261f14; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .summary div { padding: 14px; background: #f5eee9; border-radius: 6px; }
+    .summary strong { display: block; margin-top: 5px; font-size: 1.2rem; color: #74482e; }
+    .message { min-height: 24px; color: #a32929; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 650px; }
+    th, td { padding: 12px; border-bottom: 1px solid #eee5df; text-align: left; }
+    th { background: #eee5df; color: #5b3825; }
+    .cancelled { color: #8a7770; text-decoration: line-through; }
+    .status { font-size: .9rem; }
+    .status.active { color: #247044; }
+    .status.cancelled { color: #a32929; text-decoration: none; }
+    button { padding: 7px 12px; border: 0; border-radius: 5px; background: #a32929; color: #fff; cursor: pointer; }
+    button:disabled { opacity: .6; cursor: wait; }
+    a { color: #74482e; }
+    @media (max-width: 600px) { .summary { grid-template-columns: 1fr; } main { padding: 24px 12px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="/">กลับรายชื่อสมาชิก</a> · <a href="/purchase.html">บันทึกยอดซื้อ</a></p>
+    <h1>รายละเอียดสมาชิก</h1>
+    <div id="message" class="message" role="alert"></div>
+    <section id="member-card" class="card" hidden>
+      <h2 id="member-name"></h2>
+      <p id="member-contact"></p>
+      <div class="summary">
+        <div>เลขสมาชิก<strong id="member-code"></strong></div>
+        <div>แต้มสะสม<strong id="member-points"></strong></div>
+        <div>ระดับสมาชิก<strong id="member-tier"></strong></div>
+      </div>
+      <p><a id="edit-link" href="#">แก้ไขข้อมูลสมาชิก</a></p>
+    </section>
+    <section class="table-wrap">
+      <h2>ประวัติการซื้อ</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>วันเวลา</th><th>รายการกาแฟ</th><th>ยอดซื้อ</th><th>แต้ม</th><th>สถานะ</th><th>การดำเนินการ</th></tr></thead>
+          <tbody id="purchases-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="/member_detail.js" defer></script>
+</body>
+</html>

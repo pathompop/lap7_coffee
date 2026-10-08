@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บันทึกยอดซื้อ | Coffee Shop</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #f7f3ef; color: #30261f; }
+    main { max-width: 700px; margin: 0 auto; padding: 32px 20px; }
+    h1 { color: #5b3825; }
+    section { background: #fff; padding: 22px; margin: 16px 0; border-radius: 8px; box-shadow: 0 2px 12px #30261f14; }
+    label { display: block; margin: 12px 0 6px; color: #5b3825; font-weight: 600; }
+    input { box-sizing: border-box; width: 100%; padding: 11px 12px; border: 1px solid #cfc1b6; border-radius: 6px; font-size: 1rem; }
+    button { padding: 10px 16px; border: 0; border-radius: 6px; background: #74482e; color: #fff; cursor: pointer; font-size: 1rem; }
+    button:disabled { opacity: .6; cursor: wait; }
+    .search-row { display: flex; gap: 10px; }
+    .search-row input { flex: 1; }
+    .member-list { margin-top: 14px; display: grid; gap: 8px; }
+    .member-option { width: 100%; text-align: left; background: #fff; color: #30261f; border: 1px solid #d9c9bc; }
+    .member-option:hover, .member-option.selected { background: #f0e0d2; border-color: #74482e; }
+    .member-option small { display: block; color: #6c5b4d; margin-top: 3px; }
+    .cart-items { display: grid; gap: 8px; margin-top: 14px; }
+    .cart-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px; background: #f5eee9; border-radius: 6px; }
+    .cart-controls { display: flex; align-items: center; gap: 6px; }
+    .cart-controls button { padding: 5px 10px; }
+    .quantity { width: 130px; padding: 7px; text-align: center; }
+    .selected-member { min-height: 24px; margin-top: 14px; color: #5b3825; }
+    .points-preview { margin: 14px 0; color: #5b3825; font-size: 1.1rem; }
+    .message { min-height: 24px; margin-top: 12px; color: #a32929; }
+    .result { border-left: 4px solid #74482e; }
+    .result p { margin: 8px 0; }
+    a { color: #74482e; }
+    @media (max-width: 520px) { .search-row { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>บันทึกยอดซื้อ</h1>
+    <p><a href="/">กลับรายชื่อสมาชิก</a></p>
+    <section>
+      <label for="member-search">ค้นหาสมาชิกด้วยเลขสมาชิกหรือชื่อ</label>
+      <div class="search-row">
+        <input id="member-search" type="search" placeholder="เช่น M000001 หรือ สมชาย">
+        <button id="search-button" type="button">ค้นหา</button>
+      </div>
+      <div id="member-list" class="member-list" aria-live="polite"></div>
+      <div id="selected-member" class="selected-member">ยังไม่ได้เลือกสมาชิก</div>
+    </section>
+    <section>
+      <h2>เลือกเมนูกาแฟ</h2>
+      <div id="coffee-menu" class="member-list">กำลังโหลดเมนู...</div>
+      <div id="cart-items" class="cart-items"></div>
+      <p id="cart-total">ยอดรวม: 0.00 บาท</p>
+    </section>
+    <section>
+      <form id="purchase-form" novalidate>
+        <label for="amount">ยอดซื้อ (บาท) — คำนวณจากเมนูที่เลือก</label>
+        <input id="amount" type="number" min="0.01" step="0.01" readonly disabled required>
+        <p id="points-preview" class="points-preview">กรอกยอดซื้อเพื่อดูแต้มที่จะได้รับ</p>
+        <div id="message" class="message" role="alert"></div>
+        <button id="save-button" type="submit" disabled>ยืนยันบันทึกยอดซื้อ</button>
+      </form>
+    </section>
+    <section id="result" class="result" hidden>
+      <h2>บันทึกสำเร็จ</h2>
+      <p id="result-member"></p>
+      <p id="result-points"></p>
+      <p id="result-tier"></p>
+    </section>
+  </main>
+  <script src="/purchase.js" defer></script>
+</body>
+</html>
