@@ -13,16 +13,21 @@ const port = Number(process.env.PORT) || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const db = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: Number(process.env.DB_PORT) || 3306,
-  user: process.env.DB_USER || 'lap6',
-  password: process.env.DB_PASSWORD || 'root',
-  database: process.env.DB_NAME || 'lap_6',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+const dbConfig = process.env.DATABASE_URL || process.env.MYSQL_URL
+  ? (process.env.DATABASE_URL || process.env.MYSQL_URL)
+  : {
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 3306,
+    user: process.env.DB_USER || 'lap6',
+    password: process.env.DB_PASSWORD || 'root',
+    database: process.env.DB_NAME || 'lap_6',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    ...(process.env.DB_SSL === 'true' ? { ssl: { rejectUnauthorized: false } } : {}),
+  };
+
+const db = mysql.createPool(dbConfig);
 
 app.use('/api/members', (req, res, next) => {
   req.db = db;
@@ -56,7 +61,16 @@ async function start() {
       console.log(`Server is running at http://localhost:${port}`);
     });
   } catch (error) {
-    console.error('Unable to connect to MySQL:', error.message);
+    console.error('Unable to connect to MySQL:', {
+      message: error.message || '(no message)',
+      code: error.code,
+      errno: error.errno,
+      syscall: error.syscall,
+      address: error.address,
+      port: error.port,
+      host: process.env.DB_HOST || '(connection URL)',
+      database: process.env.DB_NAME || '(from connection URL)',
+    });
     process.exit(1);
   }
 }

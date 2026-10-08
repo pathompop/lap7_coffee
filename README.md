@@ -33,6 +33,6 @@ DB_NAME=lap_6
 2. ใน Render เลือก **New > Web Service** แล้วเชื่อม repository นี้ หรือใช้ `render.yaml` ด้วย Blueprint.
 3. Render จะใช้ `npm ci` เป็น Build Command และ `npm start` เป็น Start Command.
 4. ตั้งค่า `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` และ `DB_NAME` ใน Environment ของ Render.
-5. ใช้ MySQL จากผู้ให้บริการภายนอกที่ Render เข้าถึงได้ แล้วนำ schema ไปสร้างในฐานข้อมูลนั้นก่อน deploy.
+5. ใช้ MySQL จากผู้ให้บริการภายนอกที่ Render เข้าถึงได้ แล้วนำ schema ไปสร้างในฐานข้อมูลนั้นก่อน deploy. ตั้งค่าเป็น `DATABASE_URL` ได้ หรือใช้ค่าทีละตัวแปรก็ได้
 
 Render ไม่ได้สร้าง MySQL ให้ใน Web Service เดียวกัน จึงต้องเตรียมฐานข้อมูล MySQL แยกต่างหาก

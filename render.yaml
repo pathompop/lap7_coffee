@@ -18,3 +18,7 @@ services:
         sync: false
       - key: DB_NAME
         sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL
+        value: "false"
